@@ -84,9 +84,10 @@ _FMT_B_TXN_START_RE = re.compile(r"^(\d{2}/\d{2}/\d{2})\s+(.+)$")
 # where ref_no is 15-20 chars (alnum), value_dt is DD/MM/YY, amount and
 # balance are decimal numbers with commas. The cells can be present even
 # when ref_no is `000000000000000` (zero-padded for non-transactional rows
-# like DEBITCARDCASHBACK credits).
+# like DEBITCARDCASHBACK credits). The balance can be negative (e.g. -833.32
+# just before a sweep-in credit), so it takes an optional minus sign.
 _FMT_B_TAIL_RE = re.compile(
-    r"\s+(\S{8,})\s+(\d{2}/\d{2}/\d{2})\s+([\d,]+\.\d{2})\s+([\d,]+\.\d{2})\s*$"
+    r"\s+(\S{8,})\s+(\d{2}/\d{2}/\d{2})\s+([\d,]+\.\d{2})\s+(-?[\d,]+\.\d{2})\s*$"
 )
 
 # Each narration block ends with "Value Dt DD/MM/YYYY [Ref XXXXXXXXX]"
