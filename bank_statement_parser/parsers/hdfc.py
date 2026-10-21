@@ -45,10 +45,12 @@ _PERIOD_RE = re.compile(
     r"Statement\s+From\s*:\s*(\d{2}/\d{2}/\d{4})\s+To\s+(\d{2}/\d{2}/\d{4})",
     re.IGNORECASE,
 )
-_OPENING_BAL_RE = re.compile(r"Opening\s+Balance\s*:\s*([\d,]+\.\d{2})", re.IGNORECASE)
+# Opening and closing balances can be negative (an overdrawn account), so
+# they take an optional minus sign, like the row balance in _FMT_B_TAIL_RE.
+_OPENING_BAL_RE = re.compile(r"Opening\s+Balance\s*:\s*(-?[\d,]+\.\d{2})", re.IGNORECASE)
 _CLOSING_BAL_RE = re.compile(
     r"Opening\s+Balance\s+Debit\s+Amount\s+Credit\s+Amount\s+Closing\s+Balance\s+"
-    r"([\d,]+\.\d{2})\s+([\d,]+\.\d{2})\s+([\d,]+\.\d{2})\s+([\d,]+\.\d{2})",
+    r"(-?[\d,]+\.\d{2})\s+([\d,]+\.\d{2})\s+([\d,]+\.\d{2})\s+(-?[\d,]+\.\d{2})",
     re.IGNORECASE,
 )
 
